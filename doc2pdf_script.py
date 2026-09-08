@@ -2,7 +2,10 @@
 import os
 import win32com.client
 
-folder = r"<folder path>"  # Change this to your folder path
+# Run Script: python <script_path>
+
+folder = r"<folder_path>"  # Change this to your folder containing the Word Docs
+new_folder = r"<folder_path>" # Folder to output to
 
 print(f"Looking in: {folder}")
 print("Files found:", os.listdir(folder))
@@ -14,7 +17,7 @@ for filename in os.listdir(folder):
     print(f"Checking: {filename}")
     if filename.lower().endswith((".doc", ".docx")):
         doc_path = os.path.join(folder, filename)
-        pdf_path = os.path.join(folder, os.path.splitext(filename)[0] + ".pdf")
+        pdf_path = os.path.join(new_folder, os.path.splitext(filename)[0] + ".pdf")
         print(f"Converting: {doc_path} -> {pdf_path}")
         doc = word.Documents.Open(doc_path)
         doc.SaveAs(pdf_path, FileFormat=17)  # 17 = wdFormatPDF
@@ -22,5 +25,4 @@ for filename in os.listdir(folder):
         print(f"Converted: {doc_path} -> {pdf_path}")
 
 word.Quit()
-
 print("All conversions done.")
